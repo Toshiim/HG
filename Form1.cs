@@ -100,6 +100,7 @@ namespace HG
             int newVertex = graph.Vertices.Count > 0 ? graph.Vertices.Max() + 1 : 1;
             graph.AddVertex(newVertex, e.Location); // Передаём координаты клика
             drawPanel.Invalidate(); // Перерисовываем панель
+            UpdateComboBoxVertices();
         }
 
 
@@ -118,6 +119,7 @@ namespace HG
                     {
                         graph.RemoveVertex(vertex);
                         drawPanel.Invalidate();
+                        UpdateComboBoxVertices();
                         return;
                     }
                 }
@@ -311,6 +313,24 @@ namespace HG
 
                 visited.Remove(currentVertex);
                 return false;
+            }
+        }
+        private void UpdateComboBoxVertices()
+        {
+            cmbStartVertex.Items.Clear(); // Очистить предыдущие элементы
+            foreach (var vertex in graph.Vertices)
+            {
+                cmbStartVertex.Items.Add(vertex); // Добавить все вершины
+            }
+
+            if (cmbStartVertex.Items.Count > 0)
+                cmbStartVertex.SelectedIndex = 0; // Выбрать первую вершину по умолчанию
+        }
+        private void cmbStartVertex_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmbStartVertex.SelectedItem is int selectedVertex)
+            {
+                algorithmSettings.StartVertex = selectedVertex; // Установить выбранную вершину
             }
         }
         private void UpdateAlgorithmSettings()

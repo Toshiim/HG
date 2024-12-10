@@ -51,7 +51,7 @@
             this.drawPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.drawPanel.Location = new System.Drawing.Point(0, 0);
             this.drawPanel.Name = "drawPanel";
-            this.drawPanel.Size = new System.Drawing.Size(1181, 873);
+            this.drawPanel.Size = new System.Drawing.Size(1239, 908);
             this.drawPanel.TabIndex = 0;
             this.drawPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.DrawPanel_Paint);
             this.drawPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DrawPanel_MouseClick);
@@ -62,33 +62,35 @@
             // 
             // lblExecutionTime
             // 
+            this.lblExecutionTime.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblExecutionTime.AutoSize = true;
             this.lblExecutionTime.BackColor = System.Drawing.Color.Transparent;
             this.lblExecutionTime.Enabled = false;
-            this.lblExecutionTime.Location = new System.Drawing.Point(728, 41);
+            this.lblExecutionTime.Location = new System.Drawing.Point(774, 41);
             this.lblExecutionTime.Name = "lblExecutionTime";
-            this.lblExecutionTime.Size = new System.Drawing.Size(38, 15);
+            this.lblExecutionTime.Size = new System.Drawing.Size(45, 15);
             this.lblExecutionTime.TabIndex = 5;
-            this.lblExecutionTime.Text = "label1";
+            this.lblExecutionTime.Text = "Время:";
             // 
             // flowLayoutPanel1
             // 
-            this.flowLayoutPanel1.BackColor = System.Drawing.Color.Silver;
+            this.flowLayoutPanel1.BackColor = System.Drawing.SystemColors.WindowFrame;
             this.flowLayoutPanel1.Controls.Add(this.btnStartAlgorithm);
             this.flowLayoutPanel1.Controls.Add(this.nudDelay);
             this.flowLayoutPanel1.Controls.Add(this.cmbStartVertex);
+            this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
-            this.flowLayoutPanel1.Size = new System.Drawing.Size(1181, 38);
+            this.flowLayoutPanel1.Size = new System.Drawing.Size(1239, 38);
             this.flowLayoutPanel1.TabIndex = 2;
             // 
             // btnStartAlgorithm
             // 
             this.btnStartAlgorithm.Location = new System.Drawing.Point(3, 3);
             this.btnStartAlgorithm.Name = "btnStartAlgorithm";
-            this.btnStartAlgorithm.Size = new System.Drawing.Size(75, 23);
+            this.btnStartAlgorithm.Size = new System.Drawing.Size(75, 26);
             this.btnStartAlgorithm.TabIndex = 5;
-            this.btnStartAlgorithm.Text = "button1";
+            this.btnStartAlgorithm.Text = "Пуск ";
             this.btnStartAlgorithm.UseVisualStyleBackColor = true;
             this.btnStartAlgorithm.Click += new System.EventHandler(this.btnStartAlgorithm_Click);
             // 
@@ -116,17 +118,19 @@
             this.cmbStartVertex.Name = "cmbStartVertex";
             this.cmbStartVertex.Size = new System.Drawing.Size(121, 23);
             this.cmbStartVertex.TabIndex = 8;
+            this.cmbStartVertex.SelectedIndexChanged += new System.EventHandler(this.cmbStartVertex_SelectedIndexChanged);
             // 
             // lblActions
             // 
+            this.lblActions.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lblActions.AutoSize = true;
             this.lblActions.BackColor = System.Drawing.Color.Transparent;
             this.lblActions.Enabled = false;
-            this.lblActions.Location = new System.Drawing.Point(391, 41);
+            this.lblActions.Location = new System.Drawing.Point(346, 41);
             this.lblActions.Name = "lblActions";
-            this.lblActions.Size = new System.Drawing.Size(38, 15);
+            this.lblActions.Size = new System.Drawing.Size(65, 15);
             this.lblActions.TabIndex = 4;
-            this.lblActions.Text = "label2";
+            this.lblActions.Text = "Действий: ";
             // 
             // label1
             // 
@@ -136,7 +140,7 @@
             this.label1.Enabled = false;
             this.label1.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label1.ForeColor = System.Drawing.SystemColors.GrayText;
-            this.label1.Location = new System.Drawing.Point(0, 789);
+            this.label1.Location = new System.Drawing.Point(0, 824);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(371, 84);
             this.label1.TabIndex = 9;
@@ -148,7 +152,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1181, 873);
+            this.ClientSize = new System.Drawing.Size(1239, 908);
             this.Controls.Add(this.drawPanel);
             this.Name = "Form1";
             this.Text = "Form1";
