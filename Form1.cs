@@ -63,7 +63,7 @@ namespace HG
 
             var positions = graph.GetVertexPositions(drawPanel.Size);
             var g = e.Graphics;
-
+            g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             var pen = new Pen(Color.Black, 2);
             var font = new Font("Arial", 10);
             var brush = Brushes.LightBlue;

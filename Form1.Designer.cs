@@ -63,6 +63,8 @@
             // lblExecutionTime
             // 
             this.lblExecutionTime.AutoSize = true;
+            this.lblExecutionTime.BackColor = System.Drawing.Color.Transparent;
+            this.lblExecutionTime.Enabled = false;
             this.lblExecutionTime.Location = new System.Drawing.Point(728, 41);
             this.lblExecutionTime.Name = "lblExecutionTime";
             this.lblExecutionTime.Size = new System.Drawing.Size(38, 15);
@@ -118,6 +120,8 @@
             // lblActions
             // 
             this.lblActions.AutoSize = true;
+            this.lblActions.BackColor = System.Drawing.Color.Transparent;
+            this.lblActions.Enabled = false;
             this.lblActions.Location = new System.Drawing.Point(391, 41);
             this.lblActions.Name = "lblActions";
             this.lblActions.Size = new System.Drawing.Size(38, 15);
