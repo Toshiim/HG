@@ -11,6 +11,8 @@ namespace HG
         private Graph graph;                // Поле для графа
         private bool isAddingMode = true;   // Режим добавления (по умолчанию)
         private int? selectedVertex = null; // Выбранная вершина для добавления рёбер
+        private int? draggingVertex = null; // Перетаскиваемая вершина
+        private Point draggingOffset;       // Смещение курсора относительно центра вершины
 
         public Form1()
         {
@@ -24,8 +26,7 @@ namespace HG
             graph = new Graph();
         }
 
-        private int? draggingVertex = null; // Перетаскиваемая вершина
-        private Point draggingOffset;       // Смещение курсора относительно центра вершины
+
         private void DrawPanel_MouseDown(object sender, MouseEventArgs e)
         {
             var positions = graph.GetVertexPositions(drawPanel.Size);

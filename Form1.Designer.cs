@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.drawPanel = new System.Windows.Forms.Panel();
+            this.drawPanel = new DoubleBufferedPanel();
             this.lblExecutionTime = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.btnStartAlgorithm = new System.Windows.Forms.Button();
@@ -158,7 +158,7 @@
 
         #endregion
 
-        private Panel drawPanel;
+        private DoubleBufferedPanel drawPanel;
         private FlowLayoutPanel flowLayoutPanel1;
         private Label lblExecutionTime;
         private Button btnStartAlgorithm;
