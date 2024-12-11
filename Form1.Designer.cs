@@ -108,13 +108,13 @@
             0,
             0});
             this.nudDelay.Name = "nudDelay";
-            this.nudDelay.Size = new System.Drawing.Size(120, 23);
+            this.nudDelay.Size = new System.Drawing.Size(57, 23);
             this.nudDelay.TabIndex = 7;
             // 
             // cmbStartVertex
             // 
             this.cmbStartVertex.FormattingEnabled = true;
-            this.cmbStartVertex.Location = new System.Drawing.Point(210, 3);
+            this.cmbStartVertex.Location = new System.Drawing.Point(147, 3);
             this.cmbStartVertex.Name = "cmbStartVertex";
             this.cmbStartVertex.Size = new System.Drawing.Size(43, 23);
             this.cmbStartVertex.TabIndex = 8;
