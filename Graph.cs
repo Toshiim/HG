@@ -9,6 +9,8 @@ namespace HG
     {
         public List<int> Vertices { get; private set; }
         public List<Edge> Edges { get; private set; }
+        public bool IsDirected { get; set; } = false;
+
 
         private Dictionary<int, Point> positions;
 
