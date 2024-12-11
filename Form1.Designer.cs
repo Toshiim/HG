@@ -116,7 +116,7 @@
             this.cmbStartVertex.FormattingEnabled = true;
             this.cmbStartVertex.Location = new System.Drawing.Point(210, 3);
             this.cmbStartVertex.Name = "cmbStartVertex";
-            this.cmbStartVertex.Size = new System.Drawing.Size(121, 23);
+            this.cmbStartVertex.Size = new System.Drawing.Size(43, 23);
             this.cmbStartVertex.TabIndex = 8;
             this.cmbStartVertex.SelectedIndexChanged += new System.EventHandler(this.cmbStartVertex_SelectedIndexChanged);
             // 

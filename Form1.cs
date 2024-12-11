@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 
 namespace HG
 {
@@ -284,7 +285,8 @@ namespace HG
                 visited.Add(currentVertex);
 
                 if (visited.Count == graph.Vertices.Count &&
-                    graph.Edges.Any(edge => edge.Source == currentVertex && edge.Target == settings.StartVertex))
+                    graph.Edges.Any(edge => (edge.Source == currentVertex && edge.Target == settings.StartVertex) ||
+                        (edge.Target == currentVertex && edge.Source == settings.StartVertex)))
                 {
                     form.PaintItRed(new Edge(currentVertex, settings.StartVertex));
                     return true;
