@@ -14,6 +14,7 @@ namespace HG
         private int? selectedVertex = null; // Выбранная вершина для добавления рёбер
         private int? draggingVertex = null; // Перетаскиваемая вершина
         private Point draggingOffset;       // Смещение курсора относительно центра вершины
+        private bool isAlgorithmRunning = false;
 
         public Form1()
         {
@@ -102,6 +103,7 @@ namespace HG
             graph.AddVertex(newVertex, e.Location); // Передаём координаты клика
             drawPanel.Invalidate(); // Перерисовываем панель
             UpdateComboBoxVertices();
+            ResetGraph();
         }
 
 
@@ -121,6 +123,7 @@ namespace HG
                         graph.RemoveVertex(vertex);
                         drawPanel.Invalidate();
                         UpdateComboBoxVertices();
+                        ResetGraph();
                         return;
                     }
                 }
@@ -134,6 +137,10 @@ namespace HG
                     {
                         graph.RemoveEdge(edge);
                         drawPanel.Invalidate();
+                        if (edge.Color == Color.Red)
+                        { 
+                            ResetGraph();
+                        }
                         return;
                     }
                 }
@@ -155,6 +162,7 @@ namespace HG
                             graph.AddEdge(selectedVertex.Value, vertex);
                             selectedVertex = null;
                             drawPanel.Invalidate();
+                            ResetGraph();
                         }
                         return;
                     }
@@ -191,19 +199,6 @@ namespace HG
             return distanceSquared <= tolerance * tolerance;
         }
 
-        // Переключение на режим добавления
-        private void addModeRadio_CheckedChanged(object sender, EventArgs e)
-        {
-            isAddingMode = true;
-            selectedVertex = null;
-        }
-
-        // Переключение на режим удаления
-        private void removeModeRadio_CheckedChanged(object sender, EventArgs e)
-        {
-            isAddingMode = false;
-            selectedVertex = null;
-        }
         private AlgorithmSettings algorithmSettings;
         private HamiltonianCycleSolver solver;
 
@@ -259,6 +254,12 @@ namespace HG
             private DateTime startTime;
             public int ActionsCount { get; private set; }
             public TimeSpan ExecutionTime { get; private set; }
+            public bool IsCancelled { get; private set; } = false;
+
+            public void Cancel()
+            {
+                IsCancelled = true;
+            }
 
             public HamiltonianCycleSolver(Graph graph, AlgorithmSettings settings)
             {
@@ -282,19 +283,22 @@ namespace HG
 
             private async Task<bool> Backtracking(Form1 form, int currentVertex)
             {
+                if (IsCancelled) return false; // Проверка на отмену
+
                 visited.Add(currentVertex);
 
                 if (visited.Count == graph.Vertices.Count &&
                     graph.Edges.Any(edge => (edge.Source == currentVertex && edge.Target == settings.StartVertex) ||
-                        (edge.Target == currentVertex && edge.Source == settings.StartVertex)))
+                                            (edge.Target == currentVertex && edge.Source == settings.StartVertex)))
                 {
                     form.PaintItRed(new Edge(currentVertex, settings.StartVertex));
                     return true;
                 }
 
-
                 foreach (var edge in graph.Edges)
                 {
+                    if (IsCancelled) return false; // Проверка на отмену
+
                     if ((edge.Source == currentVertex && !visited.Contains(edge.Target)) ||
                         (edge.Target == currentVertex && !visited.Contains(edge.Source)))
                     {
@@ -312,10 +316,10 @@ namespace HG
                     }
                 }
 
-
                 visited.Remove(currentVertex);
                 return false;
             }
+
         }
         private void UpdateComboBoxVertices()
         {
@@ -348,11 +352,42 @@ namespace HG
             }
             drawPanel.Invalidate();
         }
+
         private void btnStartAlgorithm_Click(object sender, EventArgs e)
+        {
+            if (isAlgorithmRunning)
+            {
+                StopAlgorithm(); // Остановить алгоритм
+            }
+            else
+            {
+                StartAlgorithmWithUIUpdate(); // Запустить алгоритм
+            }
+        }
+
+        private async void StartAlgorithmWithUIUpdate()
         {
             ResetGraph();
             UpdateAlgorithmSettings();
-            _ = StartAlgorithm();
+            isAlgorithmRunning = true;
+            btnStartAlgorithm.Text = "Стоп";
+            await StartAlgorithm();
+            if (!solver.IsCancelled)
+            {
+                isAlgorithmRunning = false;
+                btnStartAlgorithm.Text = "Пуск";
+            }
         }
+
+        private void StopAlgorithm()
+        {
+            if (solver != null)
+            {
+                solver.Cancel();
+            }
+            isAlgorithmRunning = false;
+            btnStartAlgorithm.Text = "Пуск";
+        }
+
     }
 }
