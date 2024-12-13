@@ -76,7 +76,6 @@
             // 
             // flowLayoutPanel2
             // 
-            this.flowLayoutPanel2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.flowLayoutPanel2.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.flowLayoutPanel2.Controls.Add(this.tabControl1);
             this.flowLayoutPanel2.Location = new System.Drawing.Point(0, 0);
@@ -215,7 +214,7 @@
             this.lblExecutionTime.BackColor = System.Drawing.Color.Transparent;
             this.lblExecutionTime.Enabled = false;
             this.lblExecutionTime.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblExecutionTime.Location = new System.Drawing.Point(763, 30);
+            this.lblExecutionTime.Location = new System.Drawing.Point(785, 27);
             this.lblExecutionTime.Name = "lblExecutionTime";
             this.lblExecutionTime.Size = new System.Drawing.Size(58, 21);
             this.lblExecutionTime.TabIndex = 5;
@@ -228,7 +227,7 @@
             this.lblActions.BackColor = System.Drawing.Color.Transparent;
             this.lblActions.Enabled = false;
             this.lblActions.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.lblActions.Location = new System.Drawing.Point(438, 30);
+            this.lblActions.Location = new System.Drawing.Point(460, 27);
             this.lblActions.Name = "lblActions";
             this.lblActions.Size = new System.Drawing.Size(85, 21);
             this.lblActions.TabIndex = 4;

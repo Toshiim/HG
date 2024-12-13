@@ -20,7 +20,15 @@ namespace HG
             Edges = new List<Edge>();
             positions = new Dictionary<int, Point>();
         }
+        public void ParsePositions(int vertex, Point point)
+        {
+            positions.Clear();
+            positions.Add(vertex, point);
 
+        }
+
+
+            
         public void AddVertex(int vertex, Point position)
         {
             if (!Vertices.Contains(vertex))

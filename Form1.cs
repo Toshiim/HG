@@ -486,6 +486,14 @@ namespace HG
                 }
             }
         }
+        public void LoadFromFile(string filePath)
+        {
+            graph.Clear();
+            graph = FileManager.LoadGraphFromFile(filePath); // Загружаем граф из файла
+
+            // Обновление интерфейса после загрузки
+            drawPanel.Invalidate(); // Обновляем отображение графа
+        }
 
         private void buttonLoad_Click(object sender, EventArgs e)
         {
@@ -499,10 +507,8 @@ namespace HG
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     string filePath = openFileDialog.FileName; // Получаем путь выбранного файла
-                    graph = FileManager.LoadGraphFromFile(filePath); // Загружаем граф из файла
+                    LoadFromFile(filePath);
 
-                    // Обновление интерфейса после загрузки
-                    drawPanel.Invalidate(); // Обновляем отображение графа
                 }
             }
         }

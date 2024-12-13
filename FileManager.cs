@@ -4,6 +4,7 @@ using System.IO;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Drawing;
+using System.Windows.Forms;
 
 namespace HG
 {
@@ -17,18 +18,19 @@ namespace HG
                 Vertices = graph.Vertices,
                 Edges = graph.Edges.Select(e => new { e.Source, e.Target, e.Color }).ToList(),
                 HamiltonianPath = graph.HamiltonianPath,
-                Positions = graph.GetVertexPositions(new Size(0, 0)) // Получаем все позиции вершин
+                Positions = graph.GetVertexPositions(new Size(0, 0)), // Получаем все позиции вершин
+                IsDirected = graph.IsDirected
             };
 
             try
             {
                 string json = JsonConvert.SerializeObject(graphData, Formatting.Indented);
                 File.WriteAllText(filePath, json);
-                Console.WriteLine($"Граф успешно сохранён в файл {filePath}");
+                MessageBox.Show($"Граф успешно сохранён в файл {filePath}", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Ошибка при сохранении графа: {ex.Message}");
+                MessageBox.Show($"Ошибка при сохранении графа: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -38,47 +40,82 @@ namespace HG
             try
             {
                 string json = File.ReadAllText(filePath);
-                var graphData = JsonConvert.DeserializeObject<dynamic>(json);
+                var graphData = JsonConvert.DeserializeObject<GraphData>(json);
 
                 Graph graph = new Graph();
-
-                // Восстанавливаем вершины
+                graph.IsDirected = graphData.IsDirected;
+                // Восстанавливаем вершины и их позиции
                 foreach (var vertex in graphData.Vertices)
                 {
-                    graph.AddVertex(vertex, new Point(0, 0)); // Позиции будут сгенерированы при необходимости
+                    // Если позиции для вершины уже существуют, восстанавливаем её с этими позициями
+                    Point position = new Point(0, 0); // По умолчанию, если позиция не найдена
+                    if (graphData.Positions != null && graphData.Positions.ContainsKey(vertex))
+                    {
+                        var coordinates = graphData.Positions[vertex].Split(',');
+                        position = new Point(int.Parse(coordinates[0].Trim()), int.Parse(coordinates[1].Trim()));
+                    }
+
+                    graph.AddVertex(vertex, position); // Добавляем вершину с восстановленной позицией
                 }
 
-                // Восстанавливаем рёбра
-                foreach (var edge in graphData.Edges)
+                // Восстанавливаем рёбра и их цвета
+                foreach (var edgeData in graphData.Edges)
                 {
-                    graph.AddEdge((int)edge.Source, (int)edge.Target);
+                    // Преобразуем строковый цвет в объект Color
+                    Color edgeColor = ColorTranslator.FromHtml(edgeData.Color);
+
+                    // Добавляем рёбра в граф с нужным цветом
+                    graph.AddEdge(edgeData.Source, edgeData.Target);
+                    var edge = graph.Edges.LastOrDefault(e => e.Source == edgeData.Source && e.Target == edgeData.Target);
+                    if (edge != null)
+                    {
+                        graph.UpdateEdgeColor(edge, edgeColor);
+                    }
                 }
 
                 // Восстанавливаем гамильтонов путь
                 if (graphData.HamiltonianPath != null)
                 {
-                    graph.HamiltonianPath = graphData.HamiltonianPath.ToObject<List<int>>();
+                    graph.HamiltonianPath = graphData.HamiltonianPath;
                 }
 
-                // Восстанавливаем позиции вершин
-                if (graphData.Positions != null)
+                // Используем метод GetVertexPositions для получения всех позиций
+                var positions = graph.GetVertexPositions(new Size(800, 600)); // Здесь задаём размер панели (по необходимости)
+
+                // Обновляем позиции вершин в графе
+                foreach (var position in positions)
                 {
-                    foreach (var position in graphData.Positions)
-                    {
-                        int vertex = position.Name;
-                        var point = new Point((int)position.Value.X, (int)position.Value.Y);
-                        graph.UpdateVertexPosition(vertex, point);
-                    }
+                    graph.UpdateVertexPosition(position.Key, position.Value);
                 }
 
-                Console.WriteLine($"Граф успешно загружен из файла {filePath}");
+                MessageBox.Show($"Граф успешно загружен из файла {filePath}", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return graph;
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Ошибка при загрузке графа: {ex.Message}");
+                MessageBox.Show($"Ошибка при загрузке графа: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
         }
+
+
+
+        // Класс для структуры данных, которую мы ожидаем из JSON
+        public class GraphData
+        {
+            public List<int> Vertices { get; set; }
+            public List<EdgeData> Edges { get; set; }
+            public List<int> HamiltonianPath { get; set; }
+            public Dictionary<int, string> Positions { get; set; }
+            public bool IsDirected { get; set; }
+        }
+
+        public class EdgeData
+        {
+            public int Source { get; set; }
+            public int Target { get; set; }
+            public string Color { get; set; }
+        }
+
     }
 }
