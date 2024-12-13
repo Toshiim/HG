@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.VisualStyles;
+
 
 namespace HG
 {
@@ -15,7 +17,6 @@ namespace HG
         private int? draggingVertex = null; // Перетаскиваемая вершина
         private Point draggingOffset;       // Смещение курсора относительно центра вершины
         private bool isAlgorithmRunning = false;
-
         public Form1()
         {
             InitializeComponent();
@@ -76,8 +77,47 @@ namespace HG
             {
                 var sourcePos = positions[edge.Source];
                 var targetPos = positions[edge.Target];
-                pen.Color = edge.Color; // Используем цвет ребра
+
+                // Рисуем линию ребра
+                pen.Color = edge.Color;
                 g.DrawLine(pen, sourcePos, targetPos);
+
+                // Если граф ориентированный, рисуем стрелку
+                if (graph.IsDirected)
+                {
+                    // Расчёт направления для стрелки
+                    var direction = new PointF(
+                        targetPos.X - sourcePos.X,
+                        targetPos.Y - sourcePos.Y
+                    );
+                    var length = Math.Sqrt(direction.X * direction.X + direction.Y * direction.Y);
+                    var unitDirection = new PointF(
+                        (float)(direction.X / length),
+                        (float)(direction.Y / length)
+                    );
+
+                    // Параметры стрелки
+                    // Сдвиг стрелки (на 10 пикселей назад)
+                    var offset = 20;
+
+                    // Параметры стрелки
+                    var arrowSize = 15; // Размер стрелки
+                    var arrowBase = new PointF(
+                        targetPos.X - unitDirection.X * (arrowSize + offset),  // Сдвиг с учётом offset
+                        targetPos.Y - unitDirection.Y * (arrowSize + offset)   // Сдвиг с учётом offset
+                    );
+                    var arrowLeft = new PointF(
+                        arrowBase.X + unitDirection.Y * arrowSize / 2,
+                        arrowBase.Y - unitDirection.X * arrowSize / 2
+                    );
+                    var arrowRight = new PointF(
+                        arrowBase.X - unitDirection.Y * arrowSize / 2,
+                        arrowBase.Y + unitDirection.X * arrowSize / 2
+                    );
+
+                    // Рисуем стрелку как треугольник
+                    g.FillPolygon(Brushes.Black, new[] { targetPos, arrowLeft, arrowRight });
+                }
             }
 
 
@@ -85,14 +125,21 @@ namespace HG
             foreach (var vertex in graph.Vertices)
             {
                 var pos = positions[vertex];
-                g.FillEllipse(brush, pos.X - 15, pos.Y - 15, 30, 30);
-                g.DrawEllipse(pen, pos.X - 15, pos.Y - 15, 30, 30);
+                var radius = 15;
 
+                // Рисуем круг вершины
+                g.FillEllipse(brush, pos.X - radius, pos.Y - radius, radius * 2, radius * 2);
+                g.DrawEllipse(pen, pos.X - radius, pos.Y - radius, radius * 2, radius * 2);
+
+                // Рисуем текст в центре вершины
                 var stringSize = g.MeasureString(vertex.ToString(), font);
                 g.DrawString(vertex.ToString(), font, textBrush,
                     pos.X - stringSize.Width / 2, pos.Y - stringSize.Height / 2);
             }
         }
+
+
+
 
         // Событие двойного клика мыши (добавление вершины)
         private void DrawPanel_DoubleClick(object sender, MouseEventArgs e)
@@ -245,6 +292,7 @@ namespace HG
                 IsDirected = isDirected;
             }
         }
+
         public class HamiltonianCycleSolver
         {
             private Graph graph;
@@ -278,18 +326,24 @@ namespace HG
 
                 bool result = await Backtracking(form, settings.StartVertex);
                 ExecutionTime = DateTime.Now - startTime;
+                if (result)
+                {
+                    graph.AddRange(visited);
+                }
                 return result;
             }
 
             private async Task<bool> Backtracking(Form1 form, int currentVertex)
             {
-                if (IsCancelled) return false; // Проверка на отмену
+                if (IsCancelled) return false;
 
                 visited.Add(currentVertex);
 
                 if (visited.Count == graph.Vertices.Count &&
-                    graph.Edges.Any(edge => (edge.Source == currentVertex && edge.Target == settings.StartVertex) ||
-                                            (edge.Target == currentVertex && edge.Source == settings.StartVertex)))
+                    graph.Edges.Any(edge =>
+                        (settings.IsDirected && edge.Source == currentVertex && edge.Target == settings.StartVertex) ||
+                        (!settings.IsDirected && ((edge.Source == currentVertex && edge.Target == settings.StartVertex) ||
+                                                   (edge.Target == currentVertex && edge.Source == settings.StartVertex)))))
                 {
                     form.PaintItRed(new Edge(currentVertex, settings.StartVertex));
                     return true;
@@ -297,10 +351,14 @@ namespace HG
 
                 foreach (var edge in graph.Edges)
                 {
-                    if (IsCancelled) return false; // Проверка на отмену
+                    if (IsCancelled) return false;
 
-                    if ((edge.Source == currentVertex && !visited.Contains(edge.Target)) ||
-                        (edge.Target == currentVertex && !visited.Contains(edge.Source)))
+                    bool canVisit = settings.IsDirected
+                        ? edge.Source == currentVertex && !visited.Contains(edge.Target)
+                        : (edge.Source == currentVertex && !visited.Contains(edge.Target)) ||
+                          (edge.Target == currentVertex && !visited.Contains(edge.Source));
+
+                    if (canVisit)
                     {
                         ActionsCount++;
                         form.PaintItRed(edge);
@@ -319,6 +377,7 @@ namespace HG
                 visited.Remove(currentVertex);
                 return false;
             }
+
 
         }
         private void UpdateComboBoxVertices()
@@ -389,5 +448,63 @@ namespace HG
             btnStartAlgorithm.Text = "Пуск";
         }
 
+        private void ButtonIsDirect_Click(object sender, EventArgs e)
+        {
+            // Переключаем режим графа
+            graph.IsDirected = !graph.IsDirected;
+
+            // Обновляем отображение графа
+            drawPanel.Invalidate();
+
+            // Изменяем логику поиска
+            algorithmSettings.IsDirected = graph.IsDirected;
+
+            // Сообщение о текущем режиме
+            string mode = graph.IsDirected ? "ориентированный" : "неориентированный";
+            MessageBox.Show($"Граф переключён в {mode} режим.");
+        }
+
+        private void ButtonClear_Click(object sender, EventArgs e)
+        {
+            graph.Clear();
+            drawPanel.Invalidate();
+        }
+
+        private void buttonSave_Click(object sender, EventArgs e)
+        {
+            // Создаём диалог для выбора пути сохранения
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
+                saveFileDialog.DefaultExt = "json";
+                saveFileDialog.AddExtension = true;
+
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = saveFileDialog.FileName; // Получаем путь выбранного файла
+                    FileManager.SaveGraphToFile(graph, filePath); // Сохраняем граф в файл
+                }
+            }
+        }
+
+        private void buttonLoad_Click(object sender, EventArgs e)
+        {
+            // Создаём диалог для выбора файла
+            using (OpenFileDialog openFileDialog = new OpenFileDialog())
+            {
+                openFileDialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
+                openFileDialog.DefaultExt = "json";
+                openFileDialog.AddExtension = true;
+
+                if (openFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    string filePath = openFileDialog.FileName; // Получаем путь выбранного файла
+                    graph = FileManager.LoadGraphFromFile(filePath); // Загружаем граф из файла
+
+                    // Обновление интерфейса после загрузки
+                    drawPanel.Invalidate(); // Обновляем отображение графа
+                }
+            }
+        }
     }
 }

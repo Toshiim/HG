@@ -10,7 +10,7 @@ namespace HG
         public List<int> Vertices { get; private set; }
         public List<Edge> Edges { get; private set; }
         public bool IsDirected { get; set; } = false;
-
+        public List<int> HamiltonianPath { get; set; }
 
         private Dictionary<int, Point> positions;
 
@@ -33,12 +33,25 @@ namespace HG
 
         public void AddEdge(int source, int target)
         {
-            if (!Edges.Any(edge => (edge.Source == source && edge.Target == target) ||
-                                   (edge.Source == target && edge.Target == source)))
+            if (IsDirected)
             {
-                Edges.Add(new Edge(source, target));
+                // Для ориентированного графа добавляем ребро строго Source -> Target
+                if (!Edges.Any(edge => edge.Source == source && edge.Target == target))
+                {
+                    Edges.Add(new Edge(source, target));
+                }
+            }
+            else
+            {
+                // Для неориентированного графа проверяем оба направления
+                if (!Edges.Any(edge => (edge.Source == source && edge.Target == target) ||
+                                       (edge.Source == target && edge.Target == source)))
+                {
+                    Edges.Add(new Edge(source, target));
+                }
             }
         }
+
         public void UpdateVertexPosition(int vertex, Point newPosition)
         {
             if (positions.ContainsKey(vertex))
@@ -80,7 +93,10 @@ namespace HG
             }
             return positions;
         }
-
+        public void AddRange(List<int> path)
+        {
+            HamiltonianPath = path;
+        }
 
         public void UpdateEdgeColor(Edge edge, Color color)
         {
