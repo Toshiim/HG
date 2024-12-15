@@ -139,8 +139,6 @@ namespace HG
         }
 
 
-
-
         // Событие двойного клика мыши (добавление вершины)
         private void DrawPanel_DoubleClick(object sender, MouseEventArgs e)
         {
@@ -458,10 +456,12 @@ namespace HG
 
             // Изменяем логику поиска
             algorithmSettings.IsDirected = graph.IsDirected;
-
+            ButtonIsDirect.BackgroundImage = graph.IsDirected ? Image.FromFile("C:\\Users\\Ivan\\Desktop\\HG\\Undirected.svg.png") : global::HG.Properties.Resources.Directed_svg;
             // Сообщение о текущем режиме
             string mode = graph.IsDirected ? "ориентированный" : "неориентированный";
             MessageBox.Show($"Граф переключён в {mode} режим.");
+         
+
         }
 
         private void ButtonClear_Click(object sender, EventArgs e)

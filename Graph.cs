@@ -145,9 +145,5 @@ namespace HG
             return false;
         }
 
-        public override int GetHashCode()
-        {
-            return Source.GetHashCode() ^ Target.GetHashCode();
-        }
     }
 }

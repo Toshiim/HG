@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.drawPanel = new DoubleBufferedPanel();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
@@ -166,7 +167,7 @@
             // 
             // ButtonIsDirect
             // 
-            this.ButtonIsDirect.BackgroundImage = global::HG.Properties.Resources.Directed_svg;
+            this.ButtonIsDirect.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("ButtonIsDirect.BackgroundImage")));
             this.ButtonIsDirect.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ButtonIsDirect.Location = new System.Drawing.Point(18, 12);
             this.ButtonIsDirect.Name = "ButtonIsDirect";
