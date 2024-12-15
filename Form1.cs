@@ -359,6 +359,7 @@ namespace HG
                     if (canVisit)
                     {
                         ActionsCount++;
+                        form.lblActions.Text = $"Действий: {ActionsCount}";
                         form.PaintItRed(edge);
                         currentPath.Add(edge);
                         await Task.Delay(settings.Delay);
@@ -493,6 +494,7 @@ namespace HG
 
             // Обновление интерфейса после загрузки
             drawPanel.Invalidate(); // Обновляем отображение графа
+            UpdateComboBoxVertices();
         }
 
         private void buttonLoad_Click(object sender, EventArgs e)
