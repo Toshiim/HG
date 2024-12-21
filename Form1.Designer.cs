@@ -44,6 +44,11 @@
             this.tabFile = new System.Windows.Forms.TabPage();
             this.buttonLoad = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AboutStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.HamiltonianStrip = new System.Windows.Forms.ToolStripMenuItem();
+            this.ManStrip = new System.Windows.Forms.ToolStripMenuItem();
             this.lblExecutionTime = new System.Windows.Forms.Label();
             this.lblActions = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -56,12 +61,14 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudDelay)).BeginInit();
             this.tabGraph.SuspendLayout();
             this.tabFile.SuspendLayout();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // drawPanel
             // 
             this.drawPanel.BackColor = System.Drawing.Color.White;
             this.drawPanel.Controls.Add(this.flowLayoutPanel2);
+            this.drawPanel.Controls.Add(this.menuStrip1);
             this.drawPanel.Controls.Add(this.lblExecutionTime);
             this.drawPanel.Controls.Add(this.lblActions);
             this.drawPanel.Controls.Add(this.label1);
@@ -230,6 +237,51 @@
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.ToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(1059, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(73, 24);
+            this.menuStrip1.TabIndex = 1;
+            this.menuStrip1.Text = "Справка";
+            // 
+            // ToolStripMenuItem
+            // 
+            this.ToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.ToolStripMenuItem.BackColor = System.Drawing.Color.Transparent;
+            this.ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.AboutStrip,
+            this.HamiltonianStrip,
+            this.ManStrip});
+            this.ToolStripMenuItem.Name = "ToolStripMenuItem";
+            this.ToolStripMenuItem.Size = new System.Drawing.Size(65, 20);
+            this.ToolStripMenuItem.Text = "Справка";
+            // 
+            // AboutStrip
+            // 
+            this.AboutStrip.Name = "AboutStrip";
+            this.AboutStrip.Size = new System.Drawing.Size(180, 22);
+            this.AboutStrip.Text = "О приложении";
+            this.AboutStrip.Click += new System.EventHandler(this.AboutStrip_Click);
+            // 
+            // HamiltonianStrip
+            // 
+            this.HamiltonianStrip.Name = "HamiltonianStrip";
+            this.HamiltonianStrip.Size = new System.Drawing.Size(180, 22);
+            this.HamiltonianStrip.Text = "Гамильтонов цикл";
+            this.HamiltonianStrip.Click += new System.EventHandler(this.HamiltonianStrip_Click);
+            // 
+            // ManStrip
+            // 
+            this.ManStrip.Name = "ManStrip";
+            this.ManStrip.Size = new System.Drawing.Size(180, 22);
+            this.ManStrip.Text = "Руководство";
+            this.ManStrip.Click += new System.EventHandler(this.ManStrip_Click);
+            // 
             // lblExecutionTime
             // 
             this.lblExecutionTime.Anchor = System.Windows.Forms.AnchorStyles.Top;
@@ -283,6 +335,7 @@
             this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(1239, 908);
             this.Controls.Add(this.drawPanel);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Form1";
             this.Text = "HG";
             this.drawPanel.ResumeLayout(false);
@@ -294,6 +347,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.nudDelay)).EndInit();
             this.tabGraph.ResumeLayout(false);
             this.tabFile.ResumeLayout(false);
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -320,5 +375,10 @@
         private SaveFileDialog saveFileDialog1;
         private Label label2;
         private Label label3;
+        private MenuStrip menuStrip1;
+        private ToolStripMenuItem ToolStripMenuItem;
+        private ToolStripMenuItem AboutStrip;
+        private ToolStripMenuItem HamiltonianStrip;
+        private ToolStripMenuItem ManStrip;
     }
 }

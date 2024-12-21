@@ -513,5 +513,24 @@ namespace HG
                 }
             }
         }
+
+        private void AboutStrip_Click(object sender, EventArgs e)
+        {
+            ShowForm(new About());
+        }
+
+        private void HamiltonianStrip_Click(object sender, EventArgs e)
+        {
+            ShowForm(new Hamiltonian());
+        }
+
+        private void ManStrip_Click(object sender, EventArgs e)
+        {
+            ShowForm(new Guide());
+        }
+        private void ShowForm(Form form)
+        {
+            form.ShowDialog();
+        }
     }
 }
