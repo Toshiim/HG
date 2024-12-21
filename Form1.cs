@@ -461,7 +461,6 @@ namespace HG
             // Сообщение о текущем режиме
             string mode = graph.IsDirected ? "ориентированный" : "неориентированный";
             MessageBox.Show($"Граф переключён в {mode} режим.");
-         
 
         }
 

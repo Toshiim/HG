@@ -33,9 +33,11 @@
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabSearch = new System.Windows.Forms.TabPage();
-            this.cmbStartVertex = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.nudDelay = new System.Windows.Forms.NumericUpDown();
             this.btnStartAlgorithm = new System.Windows.Forms.Button();
+            this.cmbStartVertex = new System.Windows.Forms.ComboBox();
             this.tabGraph = new System.Windows.Forms.TabPage();
             this.ButtonClear = new System.Windows.Forms.Button();
             this.ButtonIsDirect = new System.Windows.Forms.Button();
@@ -81,7 +83,7 @@
             this.flowLayoutPanel2.Controls.Add(this.tabControl1);
             this.flowLayoutPanel2.Location = new System.Drawing.Point(0, 0);
             this.flowLayoutPanel2.Name = "flowLayoutPanel2";
-            this.flowLayoutPanel2.Size = new System.Drawing.Size(377, 113);
+            this.flowLayoutPanel2.Size = new System.Drawing.Size(321, 108);
             this.flowLayoutPanel2.TabIndex = 10;
             // 
             // tabControl1
@@ -92,29 +94,40 @@
             this.tabControl1.Location = new System.Drawing.Point(3, 3);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(369, 100);
+            this.tabControl1.Size = new System.Drawing.Size(314, 100);
             this.tabControl1.TabIndex = 0;
             // 
             // tabSearch
             // 
-            this.tabSearch.Controls.Add(this.cmbStartVertex);
+            this.tabSearch.Controls.Add(this.label2);
+            this.tabSearch.Controls.Add(this.label3);
             this.tabSearch.Controls.Add(this.nudDelay);
             this.tabSearch.Controls.Add(this.btnStartAlgorithm);
+            this.tabSearch.Controls.Add(this.cmbStartVertex);
             this.tabSearch.Location = new System.Drawing.Point(4, 24);
             this.tabSearch.Name = "tabSearch";
-            this.tabSearch.Size = new System.Drawing.Size(361, 72);
+            this.tabSearch.Size = new System.Drawing.Size(306, 72);
             this.tabSearch.TabIndex = 2;
             this.tabSearch.Text = "HG";
             this.tabSearch.UseVisualStyleBackColor = true;
             // 
-            // cmbStartVertex
+            // label2
             // 
-            this.cmbStartVertex.FormattingEnabled = true;
-            this.cmbStartVertex.Location = new System.Drawing.Point(188, 31);
-            this.cmbStartVertex.Name = "cmbStartVertex";
-            this.cmbStartVertex.Size = new System.Drawing.Size(75, 23);
-            this.cmbStartVertex.TabIndex = 8;
-            this.cmbStartVertex.SelectedIndexChanged += new System.EventHandler(this.cmbStartVertex_SelectedIndexChanged);
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(107, 13);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(60, 15);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Задержка";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(201, 13);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(100, 15);
+            this.label3.TabIndex = 2;
+            this.label3.Text = "Вершина начала";
             // 
             // nudDelay
             // 
@@ -123,7 +136,7 @@
             0,
             0,
             0});
-            this.nudDelay.Location = new System.Drawing.Point(93, 32);
+            this.nudDelay.Location = new System.Drawing.Point(107, 32);
             this.nudDelay.Maximum = new decimal(new int[] {
             1000,
             0,
@@ -135,13 +148,22 @@
             // 
             // btnStartAlgorithm
             // 
-            this.btnStartAlgorithm.Location = new System.Drawing.Point(3, 32);
+            this.btnStartAlgorithm.Location = new System.Drawing.Point(17, 32);
             this.btnStartAlgorithm.Name = "btnStartAlgorithm";
             this.btnStartAlgorithm.Size = new System.Drawing.Size(75, 26);
             this.btnStartAlgorithm.TabIndex = 5;
             this.btnStartAlgorithm.Text = "Пуск ";
             this.btnStartAlgorithm.UseVisualStyleBackColor = true;
             this.btnStartAlgorithm.Click += new System.EventHandler(this.btnStartAlgorithm_Click);
+            // 
+            // cmbStartVertex
+            // 
+            this.cmbStartVertex.FormattingEnabled = true;
+            this.cmbStartVertex.Location = new System.Drawing.Point(201, 31);
+            this.cmbStartVertex.Name = "cmbStartVertex";
+            this.cmbStartVertex.Size = new System.Drawing.Size(75, 23);
+            this.cmbStartVertex.TabIndex = 8;
+            this.cmbStartVertex.SelectedIndexChanged += new System.EventHandler(this.cmbStartVertex_SelectedIndexChanged);
             // 
             // tabGraph
             // 
@@ -150,16 +172,16 @@
             this.tabGraph.Location = new System.Drawing.Point(4, 24);
             this.tabGraph.Name = "tabGraph";
             this.tabGraph.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGraph.Size = new System.Drawing.Size(361, 72);
+            this.tabGraph.Size = new System.Drawing.Size(306, 72);
             this.tabGraph.TabIndex = 0;
             this.tabGraph.Text = "Граф";
             this.tabGraph.UseVisualStyleBackColor = true;
             // 
             // ButtonClear
             // 
-            this.ButtonClear.Location = new System.Drawing.Point(104, 13);
+            this.ButtonClear.Location = new System.Drawing.Point(112, 12);
             this.ButtonClear.Name = "ButtonClear";
-            this.ButtonClear.Size = new System.Drawing.Size(109, 50);
+            this.ButtonClear.Size = new System.Drawing.Size(83, 51);
             this.ButtonClear.TabIndex = 1;
             this.ButtonClear.Text = "Очистить";
             this.ButtonClear.UseVisualStyleBackColor = true;
@@ -171,7 +193,7 @@
             this.ButtonIsDirect.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ButtonIsDirect.Location = new System.Drawing.Point(18, 12);
             this.ButtonIsDirect.Name = "ButtonIsDirect";
-            this.ButtonIsDirect.Size = new System.Drawing.Size(63, 51);
+            this.ButtonIsDirect.Size = new System.Drawing.Size(64, 51);
             this.ButtonIsDirect.TabIndex = 0;
             this.ButtonIsDirect.UseVisualStyleBackColor = true;
             this.ButtonIsDirect.Click += new System.EventHandler(this.ButtonIsDirect_Click);
@@ -183,16 +205,16 @@
             this.tabFile.Location = new System.Drawing.Point(4, 24);
             this.tabFile.Name = "tabFile";
             this.tabFile.Padding = new System.Windows.Forms.Padding(3);
-            this.tabFile.Size = new System.Drawing.Size(361, 72);
+            this.tabFile.Size = new System.Drawing.Size(306, 72);
             this.tabFile.TabIndex = 1;
             this.tabFile.Text = "Файл";
             this.tabFile.UseVisualStyleBackColor = true;
             // 
             // buttonLoad
             // 
-            this.buttonLoad.Location = new System.Drawing.Point(212, 11);
+            this.buttonLoad.Location = new System.Drawing.Point(155, 11);
             this.buttonLoad.Name = "buttonLoad";
-            this.buttonLoad.Size = new System.Drawing.Size(107, 46);
+            this.buttonLoad.Size = new System.Drawing.Size(104, 46);
             this.buttonLoad.TabIndex = 1;
             this.buttonLoad.Text = "Загрузка";
             this.buttonLoad.UseVisualStyleBackColor = true;
@@ -200,9 +222,9 @@
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(34, 11);
+            this.buttonSave.Location = new System.Drawing.Point(26, 11);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(111, 46);
+            this.buttonSave.Size = new System.Drawing.Size(99, 46);
             this.buttonSave.TabIndex = 0;
             this.buttonSave.Text = "Сохранение";
             this.buttonSave.UseVisualStyleBackColor = true;
@@ -258,15 +280,17 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.ClientSize = new System.Drawing.Size(1239, 908);
             this.Controls.Add(this.drawPanel);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "HG";
             this.drawPanel.ResumeLayout(false);
             this.drawPanel.PerformLayout();
             this.flowLayoutPanel2.ResumeLayout(false);
             this.tabControl1.ResumeLayout(false);
             this.tabSearch.ResumeLayout(false);
+            this.tabSearch.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudDelay)).EndInit();
             this.tabGraph.ResumeLayout(false);
             this.tabFile.ResumeLayout(false);
@@ -294,5 +318,7 @@
         private Button buttonSave;
         private OpenFileDialog openFileDialog1;
         private SaveFileDialog saveFileDialog1;
+        private Label label2;
+        private Label label3;
     }
 }

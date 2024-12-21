@@ -121,4 +121,7 @@
   <data name="Directed.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Directed.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Undirected.svg" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Undirected.svg.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
