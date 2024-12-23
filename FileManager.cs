@@ -10,6 +10,7 @@ namespace HG
 {
     public static class FileManager
     {
+
         // Сохранение графа и гамильтонова пути в файл
         public static void SaveGraphToFile(Graph graph, string filePath)
         {
@@ -27,10 +28,12 @@ namespace HG
                 string json = JsonConvert.SerializeObject(graphData, Formatting.Indented);
                 File.WriteAllText(filePath, json);
                 MessageBox.Show($"Граф успешно сохранён в файл {filePath}", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Logger.Log($"Граф сохранён в файл: {filePath}");
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при сохранении графа: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.Log($"Ошибка при сохранении графа: {ex.Message}");
             }
         }
 
@@ -44,10 +47,10 @@ namespace HG
 
                 Graph graph = new Graph();
                 graph.IsDirected = graphData.IsDirected;
+
                 // Восстанавливаем вершины и их позиции
                 foreach (var vertex in graphData.Vertices)
                 {
-                    // Если позиции для вершины уже существуют, восстанавливаем её с этими позициями
                     Point position = new Point(0, 0); // По умолчанию, если позиция не найдена
                     if (graphData.Positions != null && graphData.Positions.ContainsKey(vertex))
                     {
@@ -61,10 +64,7 @@ namespace HG
                 // Восстанавливаем рёбра и их цвета
                 foreach (var edgeData in graphData.Edges)
                 {
-                    // Преобразуем строковый цвет в объект Color
                     Color edgeColor = ColorTranslator.FromHtml(edgeData.Color);
-
-                    // Добавляем рёбра в граф с нужным цветом
                     graph.AddEdge(edgeData.Source, edgeData.Target);
                     var edge = graph.Edges.LastOrDefault(e => e.Source == edgeData.Source && e.Target == edgeData.Target);
                     if (edge != null)
@@ -80,7 +80,7 @@ namespace HG
                 }
 
                 // Используем метод GetVertexPositions для получения всех позиций
-                var positions = graph.GetVertexPositions(new Size(800, 600)); // Здесь задаём размер панели (по необходимости)
+                var positions = graph.GetVertexPositions(new Size(800, 600)); // Задаём размер панели (по необходимости)
 
                 // Обновляем позиции вершин в графе
                 foreach (var position in positions)
@@ -89,16 +89,16 @@ namespace HG
                 }
 
                 MessageBox.Show($"Граф успешно загружен из файла {filePath}", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                Logger.Log($"Граф загружен из файла: {filePath}");
                 return graph;
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при загрузке графа: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Logger.Log($"Ошибка при загрузке графа: {ex.Message}");
                 return null;
             }
         }
-
-
 
         // Класс для структуры данных, которую мы ожидаем из JSON
         public class GraphData
@@ -116,6 +116,5 @@ namespace HG
             public int Target { get; set; }
             public string Color { get; set; }
         }
-
     }
 }

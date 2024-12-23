@@ -264,21 +264,21 @@
             // AboutStrip
             // 
             this.AboutStrip.Name = "AboutStrip";
-            this.AboutStrip.Size = new System.Drawing.Size(180, 22);
+            this.AboutStrip.Size = new System.Drawing.Size(177, 22);
             this.AboutStrip.Text = "О приложении";
             this.AboutStrip.Click += new System.EventHandler(this.AboutStrip_Click);
             // 
             // HamiltonianStrip
             // 
             this.HamiltonianStrip.Name = "HamiltonianStrip";
-            this.HamiltonianStrip.Size = new System.Drawing.Size(180, 22);
+            this.HamiltonianStrip.Size = new System.Drawing.Size(177, 22);
             this.HamiltonianStrip.Text = "Гамильтонов цикл";
             this.HamiltonianStrip.Click += new System.EventHandler(this.HamiltonianStrip_Click);
             // 
             // ManStrip
             // 
             this.ManStrip.Name = "ManStrip";
-            this.ManStrip.Size = new System.Drawing.Size(180, 22);
+            this.ManStrip.Size = new System.Drawing.Size(177, 22);
             this.ManStrip.Text = "Руководство";
             this.ManStrip.Click += new System.EventHandler(this.ManStrip_Click);
             // 

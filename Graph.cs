@@ -121,6 +121,7 @@ namespace HG
             Vertices.Clear();
             Edges.Clear();
             positions.Clear();
+            Logger.Log("Граф очищен.");
         }
     }
 

@@ -22,8 +22,27 @@ namespace HG
             InitializeComponent();
             InitializeGraph();
             InitializeAlgorithmSettings();
+            Logger.Log("ПРИЛОЖЕНИЕ ЗАПУЩЕННО");
+            this.FormClosing += MainForm_FormClosing;
         }
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            var result = MessageBox.Show(
+                "Вы действительно хотите закрыть приложение?",
+                "Подтверждение",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question
+            );
 
+            if (result == DialogResult.No)
+            {
+                e.Cancel = true;
+                return;
+            }
+
+            Logger.Log("ПРИЛОЖЕНИЕ ЗАКРЫТО");
+
+        }
         private void InitializeGraph()
         {
             graph = new Graph();
@@ -317,6 +336,7 @@ namespace HG
 
             public async Task<bool> FindCycleAsync(Form1 form)
             {
+                Logger.Log("Поиск цикла начат");
                 ActionsCount = 0;
                 startTime = DateTime.Now;
                 visited.Clear();
@@ -324,6 +344,7 @@ namespace HG
 
                 bool result = await Backtracking(form, settings.StartVertex);
                 ExecutionTime = DateTime.Now - startTime;
+                Logger.Log($"Поиск цикла законченн. Результат: {result}. Время выполнения: {ExecutionTime}");
                 if (result)
                 {
                     graph.AddRange(visited);
@@ -457,7 +478,6 @@ namespace HG
 
             // Изменяем логику поиска
             algorithmSettings.IsDirected = graph.IsDirected;
-            ButtonIsDirect.BackgroundImage = graph.IsDirected ? Image.FromFile("C:\\Users\\Ivan\\Desktop\\HG\\Undirected.svg.png") : global::HG.Properties.Resources.Directed_svg;
             // Сообщение о текущем режиме
             string mode = graph.IsDirected ? "ориентированный" : "неориентированный";
             MessageBox.Show($"Граф переключён в {mode} режим.");
@@ -468,6 +488,7 @@ namespace HG
         {
             graph.Clear();
             drawPanel.Invalidate();
+
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
